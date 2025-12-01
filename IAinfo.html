@@ -1,0 +1,82 @@
+<html>
+<head>
+  <link href="all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: #c4f8ff;
+    }
+    h1 {
+      background: #b6b8f9;
+      padding: 5px;
+      border-radius: 20px 2px 20px
+    }
+    li {
+      padding: 10px;
+    }
+    i {
+      padding: 0px;
+      border-radius: 20%;
+    }
+    a {
+      color: blue;
+    }
+    a:focus {
+      text-decoration: none;
+      color: blue;
+    }
+    #google {
+      background:linear-gradient(45deg,blue, red, yellow, green);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #mail {
+      background:linear-gradient(45deg,white, red, yellow, green);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .app {
+      background:white;
+      padding:10px
+    }
+    button {
+      padding:8px;
+      background:#1ee751;
+      border: 2px solid blue;
+      border-radius: 5px;
+      width: 100%;
+      font-size:15px
+    }
+    button:hover {
+      background:green;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>À propos de SteeveIA:</h1>
+    <p>
+      SteeveIA <i class="fas fa-robot"></i> est une IA simple ,encore très peu performant, developpé par Steeve, déployée grâce à GitHub <i class="fab fa-github" style="color: green"></i>
+    </p>
+    <h1>Developpeur:</h1>
+    <h2>Steeve</h2>
+    <p>
+      <li>
+        <i class="fab fa-facebook" style="color:blue"></i> Facebook : <a href="https://facebook.com">Adrien Maminiaina</a>
+      </li>
+      <li><i class="fas fa-message" id="mail" ></i> Gmail: <a href="https://steeveadrien1@gmail.com">steeveadrien1@gmail.com</a>
+      </li>
+      <li><i class="fab fa-google" id="google"></i> Google: <a href="#">Steeve Adrien</a></li>
+    </p>
+    <div>
+      <button onclick="chat()">utiliser SteeveIA</button>
+    </div>
+  </div>
+  <script>
+    function chat(){
+      window.open('IA_interface_ameliore.html')
+    }
+  </script>
+</body>
+</html>

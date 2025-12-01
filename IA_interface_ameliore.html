@@ -1,0 +1,475 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SteeveIA</title>
+    <link href="all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="alert.css">
+  <style>
+  :root {
+    --c1:#5ca0ff;
+    --c2:#4a90e2;
+    --c3:#92abe7;
+    --c4:#aaaefb;
+    --c5:#00056a;
+    --c10:#ff5cf5;
+    --c20:#ff5c5e;
+    --c30:#fdb3f6;
+    --c40:#c025b2;
+    --c50:#a10693;
+  }
+    body {
+      background: var(--c3)
+    }
+    img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+    .tete {
+      height: 10%;
+      display: flex;
+      flex-direction: crow;
+      gap: 10px;
+      background: linear-gradient(45deg, var(--c5), var(--c4));
+      padding:10px;
+      position: fixed;
+      left: 0;
+      right:0;
+      top:0;
+      width: 100%;
+      box-shadow: -10px 0px 10px black
+    }
+    .tete h1 {
+      text-align: center;
+      color: #dfe0fc
+    }
+    .tete p {
+      color:white
+    }
+    .tete a {
+      color: #9dc6ff
+    }
+    a:focus{
+      color: blue
+    }
+    .login {
+      position:fixed;
+      background:white;
+      width:10%;
+      gap:2px;
+      padding:5px;
+      border-radius:10px;
+      box-shadow: -5px 0px 10px black;
+      display:flex;
+      flex-direction:crow;
+      border:none
+    }
+    .login:hover {
+      background:white;
+      animation:tourne 0.5s ease 1
+    }
+    .tape{
+      width: 93%;
+      position: fixed;
+      left: 0;
+      bottom: -10px;
+      height: 15%;
+      border-radius: 15px;
+      text-align: top;
+      background: white;
+      box-shadow: -10px 0px 20px black;
+    }
+    .tape textarea {
+      height: 50%;
+      width: 80%;
+      justify-content:start;
+      border: none;
+      font-size: 18px;
+      border-radius:15px;
+    }
+    .tape textarea:focus {
+      outline: none;
+      border-color: none
+    }
+    .send {
+      position:fixed;
+      height:5%;
+      width: 10%;
+      background:var(--c1);
+      border: none;
+      bottom: 50px;
+      right: 10px;
+      border-radius:20px;
+    }
+        #chat {
+      flex: 1; overflow-y: auto; padding: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .message {
+      max-width: 75%; padding: 10px 14px;
+      border-radius: 18px; line-height: 1.4;
+      font-size: 1rem; word-wrap: break-word;
+    }
+    .user {
+      background: var(--c2); align-self: flex-end;
+      color: white; border-bottom-right-radius: 4px;
+    }
+    .bot {
+      background: none; align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      animation: tourne 1s ease 1;max-width: 100%
+    }
+    form {
+      display: flex; padding: 10px 15px;
+      background: #16202a; border-top: 1px solid #2f3b4a;
+    }
+    input[type="text"] {
+      flex: 1; padding: 12px 16px; border-radius: 30px;
+      border: none; font-size: 1rem; outline: none;
+      background: #273447; color: #eee;
+    }
+    input[type="text"]:focus {
+      background: #4a90e2;
+    }
+    
+    button:hover {
+      background: #3b78d1;
+      animation: send 2s ease 1
+    }
+    i: focus{
+      animation: send 2s ease 1
+    }
+    #chat::-webkit-scrollbar {
+      width: 6px;
+    }
+    #chat::-webkit-scrollbar-thumb {
+      background: #4a90e2; border-radius: 3px;
+    }
+    #pen {
+      animation: write 5s ease infinite
+    }
+    .message {
+  white-space: pre-wrap;
+   }
+    @keyframes write {
+      0% {transform:rotate(0deg)}
+      50% {transform:rotate(-20deg)}
+      100% {transform:rotate(0deg)}
+    }
+    @keyframes tourne {
+      0%{transform:rotateX(0deg)}
+      25% {transform:rotateX(45deg)};
+      50%{transform:rotateX(90deg)};
+      75%{transform:rotateX(135deg)};
+      100%{transform:rotateX(180deg)}
+    }
+    .masque {
+      height: 300px;
+      background: none;
+      border: none
+    }
+    footer {
+      opacity: 20%
+    }
+    @keyframes send {
+      from {opacity:100%}
+      to {opacity:0%}
+    }
+  </style>
+</head>
+<body>
+  <div class="conteneur" id="conteneur">
+    <div class="alert">
+      <div id="message">
+        <p>Alert</p>
+      </div>
+      <div class="button">
+        <button onclick="remove()">OK
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="tete">
+    <img src="profil.jpg"><h1>SteeveIA</h1>
+    <p>En savoir plus sur <a href="IAinfo.html">SteeveIA</a></p>
+  </div>
+  <div class="masqueTete" style="height:13%"></div>
+  <button class="login" onclick="login()">
+    <i class="fas fa-user"></i>
+    <i class="fas fa-plus"></i>
+  </button>
+  <div id="chat"></div>
+  <button class="masque"></button>
+  <form class="tape" id="chatForm" autocomplete="off">
+    <i class="fas fa-pen" id="pen"></i><textarea id="userInput" onfocus="prevenir()"></textarea>
+    <button class="send" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
+  </form>
+  <footer>
+    <p>Petit Projet</p>
+  </footer>
+  <script src="alert.js"></script>
+  <script>
+    alerter('Posez des question simple a SteeveIA<br><small>appui sur <i class="fas fa-user"></i> pour se connecter')
+    setInterval (()=> {
+      alerter('Posez des question simple a SteeveIA<br><small>appui sur <i class="fas fa-user"></i> pour se connecter')
+    },60000)
+    function login() {
+      alerter("La gestion de compte est actuellement en cours de developpement<br>Vous pouvez continuer à utiliser l'IA <b Style='color:green'>gratuitement</b><small> (en attendant)")
+    }
+    
+(() => {
+  const chat = document.getElementById('chat');
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('userInput');
+
+  // --- Style plus humain ---
+  const responses = [
+    {
+      keywords: ['bonjour', 'salut', 'coucou'],
+      answers: [
+        "Salut ! Content de te revoir 😄",
+        "Hey ! Comment tu vas aujourd’hui ?",
+        "Coucou toi 👋",
+        "Oh salut ! Quoi de neuf ?"
+      ]
+    },
+    {
+      keywords: ['comment ça va', 'ça va'],
+      answers: [
+        "Je vais super bien ! Et toi ?",
+        "Je me sens en forme aujourd’hui 😁 Et toi ?",
+        "Toujours là pour discuter, et toi ça va ?",
+        "Nickel ✨ Merci de demander !"
+      ]
+    },
+    {
+      keywords: ['qui es-tu', 'qui es tu', 'tu es qui'],
+      answers: [
+        "Moi ? Je suis SteeveIA, ton petit assistant curieux 🤖",
+        "On m’appelle SteeveIA, je t’aide dès que je peux 😄",
+        "Je suis une IA, mais j’essaye d’être cool 😎",
+        "Ton partenaire digital ✨"
+      ]
+    },
+    {
+      keywords: ['aide', 'aide-moi', 'aide moi'],
+      answers: [
+        "Yep, je suis là ! Dis-moi 🙂",
+        "Bien sûr, je t’écoute.",
+        "Tu peux compter sur moi, vas-y.",
+        "Je suis prêt, explique-moi ce que tu veux."
+      ]
+    },
+    {
+      keywords: ['merci', 'thank'],
+      answers: [
+        "Avec plaisir 😄",
+        "De rien !",
+        "Toujours là pour toi 😉",
+        "Ça me fait plaisir d’aider !"
+      ]
+    },
+    {
+      keywords: ['au revoir', 'bye', 'à plus'],
+      answers: [
+        "À bientôt 👋",
+        "Prends soin de toi !",
+        "On se reparle bientôt 😄",
+        "À plus ✌️"
+      ]
+    },
+    {
+      keywords: ['oui'],
+      answers: [
+        "Super 😄",
+        "Parfait !",
+        "Ok top !",
+        "Ça marche 😉"
+      ]
+    },
+    {
+      keywords: ['nonl'],
+      answers: [
+        "D’accord, pas de souci.",
+        "Comme tu veux 😉",
+        "Ça marche, on fait autrement.",
+        "Je comprends 👍"
+      ]
+    },
+    {
+      keywords: ['okl'],
+      answers: [
+        "Ok !",
+        "Ça roule 👍",
+        "Parfait.",
+      ]
+    }
+  ];
+
+  // --- Réponses quand l’IA ne sait pas ---
+  const fallbackAnswers = [
+    "Hmm… attends, je regarde ça...",
+    "Bonne question, laisse-moi vérifier un truc...",
+    "Je ne suis pas sûr, je vérifie en ligne deux secondes 🧠...",
+    "Attends un peu… je fais une petite recherche 🔎...",
+    "Je fouille Internet pour toi, bouge pas 😉..."
+  ];
+
+  function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.classList.add('message', sender);
+    msg.textContent = text;
+    chat.appendChild(msg);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  // ---- Recherche plus humaine ----
+  async function searchDuckDuckGo(query) {
+  try {
+    const url = "https://html.duckduckgo.com/html/?q=" + encodeURIComponent(query);
+
+    // Proxy CORS qui marche réellement
+    const proxy = "https://api.allorigins.win/get?url=" + encodeURIComponent(url);
+
+    const response = await fetch(proxy);
+    const data = await response.json();
+    const html = data.contents;
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    // On récupère toutes les zones qui contiennent du texte utile
+    const rawBlocks = [
+      ...doc.querySelectorAll(".result__snippet"),
+      ...doc.querySelectorAll(".result__extras__snippet"),
+      ...doc.querySelectorAll(".result__a"),  // parfois textes utiles dans les titres
+    ]
+      .map(e => e.textContent.trim())
+      .filter(t => t.length > 10);  // on supprime les titres trop courts
+
+    if (rawBlocks.length === 0) {
+      return "J’ai cherché partout… mais je n’ai rien trouvé de vraiment utile 😕";
+    }
+
+    // On élimine les doublons
+    const unique = [...new Set(rawBlocks)];
+
+    // On garde maximum les 5 meilleures infos
+    const texts = unique.slice(0, 5);
+
+    // ---- Résumé automatique façon “humain” ----
+    const cleaned = texts.join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    const summary = createHumanSummary(cleaned, query);
+
+    return summary;
+
+  } catch (err) {
+    return "Oups… la recherche a un petit souci. Réessaie dans un instant ❤️\n\n"+err;
+  }
+}
+
+
+// Fonction qui transforme un texte brut en résumé humain
+function createHumanSummary(text, query) {
+  // On découpe en phrases
+  const sentences = text.split(/\. |\? |! /).filter(s => s.length > 20);
+
+  // On garde les meilleures phrases
+  const best = sentences.slice(0, 4);
+
+  if (best.length === 0) {
+    return "J’ai trouvé des infos, mais rien d’assez clair pour t’expliquer 😕";
+  }
+
+  // ---- Résumé humain ----
+  let final =
+    `Voilà ce que j'ai compris en cherchant "${query}" :\n\n`;
+
+  best.forEach((s, i) => {
+    final += `• ${s.trim()}.\n\n`;
+  });
+
+  final += "Si tu veux, je peux te détailler encore plus 😊";
+
+  return final;
+}
+
+
+// Fonction qui transforme un texte brut en résumé humain
+function createHumanSummary(text, query) {
+  // On découpe en phrases
+  const sentences = text.split(/\. |\? |! /).filter(s => s.length > 20);
+
+  // On garde les meilleures phrases
+  const best = sentences.slice(0, 4);
+
+  if (best.length === 0) {
+    return "J’ai trouvé des infos, mais rien d’assez clair pour t’expliquer 😕";
+  }
+
+  // ---- Résumé humain ----
+  let final =
+    `Voilà ce que j'ai compris en cherchant "${query}" :\n\n`;
+
+  best.forEach((s, i) => {
+    final += `• ${s.trim()}.\n\n`;
+  });
+
+  final += "Satisfait ?😊";
+
+  return final;
+}
+
+  function getResponse(text) {
+    const lower = text.toLowerCase();
+
+    for (const rule of responses) {
+      if (rule.keywords.some(k => lower.includes(k))) {
+        const msg = rule.answers[Math.floor(Math.random() * rule.answers.length)];
+        return { answer: msg, found: true };
+      }
+    }
+
+    const fallback = fallbackAnswers[Math.floor(Math.random() * fallbackAnswers.length)];
+    return { answer: fallback, found: false };
+  }
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const text = input.value.trim();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    input.value = '';
+
+    setTimeout(async () => {
+      const { answer, found } = getResponse(text);
+      addMessage(answer, 'bot');
+
+      if (!found) {
+        // un petit délai pour simuler "recherche"
+        setTimeout(async () => {
+          const result = await searchDuckDuckGo(text);
+
+          // message plus humain
+          addMessage("Ok j’ai fini de chercher 👍", "bot");
+          setTimeout(() => {
+            addMessage(result, "bot");
+          }, 600);
+
+        }, 1800);
+      }
+
+    }, 600);
+  });
+
+  addMessage("Salut ! Je suis SteeveIA, prêt quand toi tu l’es 😄", 'bot');
+})();
+  </script>
+</body>
+</html>
